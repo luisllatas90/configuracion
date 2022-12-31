@@ -30,11 +30,14 @@ import com.app.inventario.usuario.application.queries.views.UsuarioHistoryView;
 import com.app.inventario.usuario.application.queries.views.UsuarioView;
 import com.app.inventario.usuario.application.services.UsuarioApplicationService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
+@Api(value="Api de usuarios")
 @RestController
 @RequestMapping("/usuarios")
 @Tag(name = "Usuarios")
@@ -46,7 +49,8 @@ public class UsuarioController {
         this.usuarioApplicationService = usuarioApplicationService;
         this.queryGateway = queryGateway;
     }
-
+    
+    @ApiOperation(value="Registrar usuarios")
     @PostMapping(path= "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> register(@RequestBody RegisterUsuarioRequest request) {
         try {
@@ -59,6 +63,7 @@ public class UsuarioController {
         }
     }
 
+    @ApiOperation(value="Actualizar usuario por id",response=List.class)
     @PutMapping("/{usuarioId}")
     public ResponseEntity<Object> edit(@PathVariable("usuarioId") String idUsuario, @RequestBody EditUsuarioRequest request) {
         try {
@@ -72,6 +77,7 @@ public class UsuarioController {
         }
     }
 
+    @ApiOperation(value="Obtener todos los usuarios",response=List.class)
     @GetMapping("")
     @Operation(summary = "Obtener todos los usuarios")
     public ResponseEntity<Object> getAll() {
@@ -85,6 +91,7 @@ public class UsuarioController {
         }
     }
 
+    @ApiOperation(value="Obtener usuario por id del history",response=List.class)
     @GetMapping("/{usuarioId}/history")
     @Operation(summary = "Obtener histórico de usuarios")
     public ResponseEntity<Object> getHistoryByUsuarioId(@PathVariable("usuarioId") String idUsuario) {
